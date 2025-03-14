@@ -45,6 +45,18 @@ class Reaper:
             content = '8' + size + 'D'
             print('[SUCCESS] Penis Sent')
             await ctx.send(content)
+
+
+        # decides if someones gay (totally not rigged)
+        @bot.command()
+        async def aretheygay(ctx, user):
+            print('[SUCCESS] Running gay test')
+            #print(user)
+            res = random.randint(1, 100)
+            if res == 1:
+                await ctx.send(user + ' is not gay!')
+            else:
+                await ctx.send(user + ' is gay!')
         
 
 #        DO NOT UNCOMMENT - I AM NOT AT FAULT
@@ -66,6 +78,7 @@ class Reaper:
                 ----------------------
                 - .help : Shows this message
                 - .penis : Sends a unicode penis of random length
+                - .aretheygay [user] : Runs a gay test (totally not rigged and totally not a miner)
                 ''', # lol wtf is this
             )
             print('[SUCCESS] Sent Help Embed')
