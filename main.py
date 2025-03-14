@@ -34,6 +34,7 @@ class Reaper:
                 title="Title",
                 description="Description"
             )
+            print('[SUCCESS] Embed Sent')
             await ctx.send(embeds=[embed])
 
         # randomly generates a penis with length between 1-10
@@ -42,6 +43,7 @@ class Reaper:
             amount = random.randint(1, 10)
             size = '=' * amount
             content = '8' + size + 'D'
+            print('[SUCCESS] Penis Sent')
             await ctx.send(content)
         
 
@@ -57,14 +59,16 @@ class Reaper:
         @bot.command()
         async def help(ctx):
             embed = pyvolt.SendableEmbed(
-                title="Reaper SelfBot v0.1.0",
+                title="Reaper SelfBot v0.1.0 | Made by: tomanw#0380",
                 description='''
-                    
-                ║ **COMMANDS** ║
-                ╚══════════╝
+                ----------------------    
+                --**COMMANDS**--
+                ----------------------
                 - .help : Shows this message
+                - .penis : Sends a unicode penis of random length
                 ''', # lol wtf is this
             )
+            print('[SUCCESS] Sent Help Embed')
             await ctx.send(embeds=[embed])
 
         
