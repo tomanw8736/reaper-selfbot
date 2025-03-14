@@ -1,7 +1,8 @@
 from pyvolt.ext import commands
 import pyvolt
 import asyncio
-import json
+import os
+from dotenv import load_dotenv
 import random
 
 TITLE = '''
@@ -17,10 +18,7 @@ TITLE = '''
 '''
 
 # utilities
-def get_config():
-    with open('config.json', 'r') as file:
-        data = json.load(file)
-    return data
+load_dotenv()
 
 class Reaper:
     def __init__(self, prefix):
@@ -69,8 +67,8 @@ class Reaper:
             )
             await ctx.send(embeds=[embed])
 
-        config = get_config()
-        bot.run(config["token"], bot=False)
+        
+        bot.run(os.getenv('TOKEN'), bot=False)
 
 rClient = Reaper('.')
 rClient.run()
