@@ -97,6 +97,8 @@ class Reaper:
                 )
 
                 await ctx.send(embeds=[userData])
+
+        # base64 encoding and decoding
         @bot.command()
         async def b64(ctx, mode = 'encode', string: str = 'ENTER SOMETHING'):
             if mode == 'encode':
@@ -136,6 +138,7 @@ class Reaper:
                 - .aretheytrans [user] : Runs a trans test (totally not a bitcoin miner)
 
                 - .userinfo [user] : Send an embed with information about the user
+                - .b64 [encode/decode] [string] : Encodes/Decodes a string to base64
                 ''', # lol wtf is this
             )
             print('[SUCCESS] Sent Help Embed')
