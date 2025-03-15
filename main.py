@@ -57,6 +57,25 @@ class Reaper:
                 await ctx.send(user + ' is not gay!')
             else:
                 await ctx.send(user + ' is gay!')
+
+        # decides if someones trans (totally not a bitcoin miner)
+        @bot.command()
+        async def aretheytrans(ctx, user):
+            print('[SUCCESS] Running trans test')
+            res = random.randint(1, 100)
+            if res == 1:
+                await ctx.send(user + ' is not trans!')
+            else:
+                await ctx.send(user + ' is trans!')
+            return
+        
+        @bot.command()
+        async def userinfo(ctx, user=None):
+            if not user:
+                print('[ERROR] No user specified!')
+                return
+            else:
+                print(user.username)
         
 
 #        DO NOT UNCOMMENT - I AM NOT AT FAULT
@@ -83,7 +102,11 @@ class Reaper:
             )
             print('[SUCCESS] Sent Help Embed')
             await ctx.send(embeds=[embed])
-
+        
+        # debug commands
+        @bot.command()
+        async def ping(ctx):
+            await ctx.send(f"Response time: {round(bot.latency * 1000)}ms")
         
         bot.run(os.getenv('TOKEN'), bot=False)
 
