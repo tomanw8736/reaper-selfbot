@@ -2,6 +2,7 @@ from pyvolt.ext import commands
 import pyvolt
 import asyncio
 import os
+import base64
 from dotenv import load_dotenv
 import random
 
@@ -71,17 +72,13 @@ class Reaper:
        
        # sends an embed with information on a pinged user
         @bot.command()
-        async def userinfo(ctx, user=None):
+        async def userinfo(ctx, user : pyvolt.User):
             if not user:
                 print('[ERROR] No user specified!')
                 return
             else:
-                userID = user.replace("@", "")
-                userID = userID.replace("<", "")
-                userID = userID.replace(">", "")
-                userObject = bot.get_user(userID)
                 print('[SUCCESS] Got user!')
-                avatar = userObject.internal_avatar
+                avatar = user.internal_avatar
                 avatarID = avatar.id
               #  print(avatarID)
                 avatarURL = "https://autumn.revolt.chat/avatars/" + avatarID + "?max_side=256"
@@ -90,17 +87,30 @@ class Reaper:
                 userData = pyvolt.SendableEmbed(
                     title="Reaper Selfbot v0.1.0 | Made by: tomanw#0380",
                     description=f'''
-                    Display Name: {userObject.display_name}
-                    Username: {userObject.name}#{userObject.discriminator}
-                    User ID: {userObject.id}
-                    Online: {userObject.online}
-                    Bot: {userObject.bot}
-                    Avatar: {avatarURL}
-                    '''
+                    Display Name: {user.display_name}
+                    Username: {user.name}#{user.discriminator}
+                    User ID: {user.id}
+                    Online: {user.online}
+                    Bot: {user.bot}
+                    ''',
+                    icon_url = avatarURL
                 )
 
                 await ctx.send(embeds=[userData])
-        
+        @bot.command()
+        async def b64(ctx, mode = 'encode', string: str = 'ENTER SOMETHING'):
+            if mode == 'encode':
+                string_bytes = string.encode("ascii")
+                b64_bytes = base64.b64encode(string_bytes)
+                b64_string = b64_bytes.decode("ascii")
+                await ctx.send(b64_string)
+                return
+            elif mode == 'decode':
+                b64_bytes = string.encode("ascii")
+                string_bytes = base64.b64decode(b64_bytes)
+                decoded_string = string_bytes.decode("ascii")
+                await ctx.send(decoded_string)
+                return
 
 #        DO NOT UNCOMMENT - I AM NOT AT FAULT
 #        IF YOU GET BANNED FOR USING THIS FEATURE
