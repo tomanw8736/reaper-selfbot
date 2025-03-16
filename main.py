@@ -54,10 +54,13 @@ class Reaper:
             print('[SUCCESS] Running gay test')
             #print(user)
             res = random.randint(1, 100)
-            if res == 1:
-                await ctx.send(user + ' is not gay!')
-            else:
-                await ctx.send(user + ' is gay!')
+            try:
+                if res == 1:
+                    await ctx.send(user + ' is not gay!')
+                else:
+                    await ctx.send(user + ' is gay!')
+            except:
+                print('[ERROR] Encountered an error executing command!')
 
         # decides if someones trans (totally not a bitcoin miner)
         @bot.command()
@@ -97,22 +100,26 @@ class Reaper:
                 )
 
                 await ctx.send(embeds=[userData])
+                return
 
         # base64 encoding and decoding
         @bot.command()
         async def b64(ctx, mode = 'encode', string: str = 'ENTER SOMETHING'):
-            if mode == 'encode':
-                string_bytes = string.encode("ascii")
-                b64_bytes = base64.b64encode(string_bytes)
-                b64_string = b64_bytes.decode("ascii")
-                await ctx.send(b64_string)
-                return
-            elif mode == 'decode':
-                b64_bytes = string.encode("ascii")
-                string_bytes = base64.b64decode(b64_bytes)
-                decoded_string = string_bytes.decode("ascii")
-                await ctx.send(decoded_string)
-                return
+            try:
+                if mode == 'encode':
+                    string_bytes = string.encode("ascii")
+                    b64_bytes = base64.b64encode(string_bytes)
+                    b64_string = b64_bytes.decode("ascii")
+                    await ctx.send(b64_string)
+                    return
+                elif mode == 'decode':
+                    b64_bytes = string.encode("ascii")
+                    string_bytes = base64.b64decode(b64_bytes)
+                    decoded_string = string_bytes.decode("ascii")
+                    await ctx.send(decoded_string)
+                    return
+            except:
+                print('[ERROR] Encountered an error while executing command!')
 
 #        DO NOT UNCOMMENT - I AM NOT AT FAULT
 #        IF YOU GET BANNED FOR USING THIS FEATURE
