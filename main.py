@@ -5,6 +5,7 @@ import os
 import base64
 from dotenv import load_dotenv
 import random
+import wikipedia
 
 TITLE = '''
 ╔════════════════════════════════════════════════════╗
@@ -81,10 +82,14 @@ class Reaper:
                 return
             else:
                 print('[SUCCESS] Got user!')
-                avatar = user.internal_avatar
-                avatarID = avatar.id
-              #  print(avatarID)
-                avatarURL = "https://autumn.revolt.chat/avatars/" + avatarID + "?max_side=256"
+                try:
+                    avatar = user.internal_avatar
+                    avatarID = avatar.id
+                    #  print(avatarID)
+                    avatarURL = "https://autumn.revolt.chat/avatars/" + avatarID + "?max_side=256"
+                except:
+                    avatarURL = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmemepedia.ru%2Fwp-content%2Fuploads%2F2023%2F08%2Fbojkisser-768x512.jpg&f=1&nofb=1&ipt=7637bafe9a3d022d032b8dc31e02635c8bc2c6a2a34af6c9626276182195e2f3&ipo=images"
+
 
                 # send userdata
                 userData = pyvolt.SendableEmbed(
@@ -95,8 +100,8 @@ class Reaper:
                     User ID: {user.id}
                     Online: {user.online}
                     Bot: {user.bot}
+                    [Avatar]({avatarURL})
                     ''',
-                    icon_url = avatarURL
                 )
 
                 await ctx.send(embeds=[userData])
@@ -120,6 +125,32 @@ class Reaper:
                     return
             except:
                 print('[ERROR] Encountered an error while executing command!')
+
+
+        # wikipedia command(s)
+        @bot.command()
+        async def wiki(ctx, mode = 'search', string: str = 'Test'):
+            if mode == 'search':
+                try:
+                    result = wikipedia.search(string) # getting possible pages
+                    formatResult = ", ".join(result) # seperating them by | in a string
+                    await ctx.send("Results: " + formatResult) # sending the results
+                except:
+                    await ctx.send('[ERROR] I honestly dont know what error caused this')
+            elif mode == 'summary':
+                try:
+                    result = wikipedia.summary(string) # getting a summary
+                    formatResult = result.replace('\n', "\n>")
+                    await ctx.send(f'Summary:\n>{formatResult}')
+                    #print(result)
+                except:
+                    await ctx.send("Please input a valid page name!")
+            elif mode == 'link':
+                try:
+                    result = wikipedia.page(string)
+                    await ctx.send(f'Page URL: <{result.url}>')
+                except:
+                    await ctx.send('[ERROR] Once again, no clue what caused this one')
 
 #        DO NOT UNCOMMENT - I AM NOT AT FAULT
 #        IF YOU GET BANNED FOR USING THIS FEATURE
