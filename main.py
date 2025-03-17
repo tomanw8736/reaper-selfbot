@@ -128,30 +128,40 @@ class Reaper:
 
 
         # wikipedia command(s)
+        # syntax: .wiki [search/summary/link] [query/page name]
         @bot.command()
         async def wiki(ctx, mode = 'search', string: str = 'Test'):
             if mode == 'search':
                 try:
                     result = wikipedia.search(string) # getting possible pages
-                    formatResult = ", ".join(result) # seperating them by | in a string
+                    formatResult = ", ".join(result) # seperating them by , in a string
                     await ctx.send("Results: " + formatResult) # sending the results
                 except:
                     await ctx.send('[ERROR] I honestly dont know what error caused this')
             elif mode == 'summary':
                 try:
                     result = wikipedia.summary(string) # getting a summary
-                    formatResult = result.replace('\n', "\n>")
-                    await ctx.send(f'Summary:\n>{formatResult}')
-                    #print(result)
-                except:
+                    formatResult = result.replace('\n', "\n>") # replacing new lines with new lines with quote blocks
+                    if len(formatResult) >= 2000: # if the summary exceeds the character limit for revolt
+                        print('Too long! Splitting string!')
+                        PartOne, PartTwo = formatResult[:len(formatResult)//2], formatResult[len(formatResult)//2:] # splits the summary into two strings
+                        await ctx.send(f'Summary [1/2]:\n>{PartOne}')
+                        await ctx.send(f'Summary [2/2]:\n>{PartTwo}')
+                    else: # if the summary does NOT exceed the character limit
+                        await ctx.send(f'Summary:\n>{formatResult}')
+                    
+                except: # if the user doesn't put in a valid page name/other error
                     await ctx.send("Please input a valid page name!")
             elif mode == 'link':
                 try:
-                    result = wikipedia.page(string)
-                    await ctx.send(f'Page URL: <{result.url}>')
+                    result = wikipedia.page(string) # gets the page object
+                    await ctx.send(f'Page URL: <{result.url}>') # sends the page URL/link
                 except:
                     await ctx.send('[ERROR] Once again, no clue what caused this one')
-
+        
+        @bot.command()
+        async def vale(ctx, query):
+            await ctx.send(f'<https://vale.rocks/search?q={query}>')
 #        DO NOT UNCOMMENT - I AM NOT AT FAULT
 #        IF YOU GET BANNED FOR USING THIS FEATURE
 #        @bot.command()
