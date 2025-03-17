@@ -30,41 +30,6 @@ class Reaper:
         print(TITLE)
         bot = commands.Bot(command_prefix=self.prefix, self_bot=True)
 
-        # randomly generates a penis with length between 1-10
-        @bot.command()
-        async def penis(ctx):
-            amount = random.randint(1, 10)
-            size = '=' * amount
-            content = '8' + size + 'D'
-            print('[SUCCESS] Penis Sent')
-            await ctx.send(content)
-
-
-        # decides if someones gay (totally not rigged)
-        @bot.command()
-        async def aretheygay(ctx, user):
-            print('[SUCCESS] Running gay test')
-            #print(user)
-            res = random.randint(1, 100)
-            try:
-                if res == 1:
-                    await ctx.send(user + ' is not gay!')
-                else:
-                    await ctx.send(user + ' is gay!')
-            except:
-                print('[ERROR] Encountered an error executing command!')
-
-        # decides if someones trans (totally not a bitcoin miner)
-        @bot.command()
-        async def aretheytrans(ctx, user):
-            print('[SUCCESS] Running trans test')
-            res = random.randint(1, 100)
-            if res == 1:
-                await ctx.send(user + ' is not trans!')
-            else:
-                await ctx.send(user + ' is trans!')
-            return
-       
        # sends an embed with information on a pinged user
         @bot.command()
         async def userinfo(ctx, user : pyvolt.User):
@@ -172,12 +137,10 @@ class Reaper:
                 ----------------------
                 - .help : Shows this message
 
-                - .penis : Sends a unicode penis of random length
-                - .aretheygay [user] : Runs a gay test (totally not rigged and totally not a miner)
-                - .aretheytrans [user] : Runs a trans test (totally not a bitcoin miner)
-
                 - .userinfo [user] : Send an embed with information about the user
                 - .b64 [encode/decode] [string] : Encodes/Decodes a string to base64
+                - .wiki [search/summary/link] [query] : Uses the wikipedia library to get pages information from Wikipedia
+                - .vale [query] : Returns a link to vale's epic search with your query
 
                 -----------------------------
                 --**JOIN MY SERVER**--
