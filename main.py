@@ -30,15 +30,6 @@ class Reaper:
         print(TITLE)
         bot = commands.Bot(command_prefix=self.prefix, self_bot=True)
 
-        @bot.command()
-        async def embedTest(ctx):
-            embed = pyvolt.SendableEmbed(
-                title="Title",
-                description="Description"
-            )
-            print('[SUCCESS] Embed Sent')
-            await ctx.send(embeds=[embed])
-
         # randomly generates a penis with length between 1-10
         @bot.command()
         async def penis(ctx):
@@ -187,15 +178,27 @@ class Reaper:
 
                 - .userinfo [user] : Send an embed with information about the user
                 - .b64 [encode/decode] [string] : Encodes/Decodes a string to base64
+
+                -----------------------------
+                --**JOIN MY SERVER**--
+                -----------------------------
+                [Join Friendly Now!](https://rvlt.gg/jjd9Ddt4)
                 ''', # lol wtf is this
             )
             print('[SUCCESS] Sent Help Embed')
             await ctx.send(embeds=[embed])
         
         # debug commands
+        
+        # sends a test embed
         @bot.command()
-        async def ping(ctx):
-            await ctx.send(f"Response time: {round(bot.latency * 1000)}ms")
+        async def embedTest(ctx):
+            embed = pyvolt.SendableEmbed(
+                title="Title",
+                description="Description"
+            )
+            print('[SUCCESS] Embed Sent')
+            await ctx.send(embeds=[embed])
         
         bot.run(os.getenv('TOKEN'), bot=False)
 
